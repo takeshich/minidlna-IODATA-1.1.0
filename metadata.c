@@ -435,8 +435,8 @@ GetAudioMetadata(const char *path, char *name)
 		if (song.date ==0 && song.time ==0)
 			xasprintf(&m.date, "%04d-01-01,00:00", song.year);
 		else
-			xasprintf(&m.date, "%04d-%02d-%02d,%02d:%02d", song.year, song.date/100, song.date%100, song.time/100, song.time%100);
-	}
+			xasprintf(&m.date, "%04d-%02d-%02d,%02d:%02d", song.year, song.date%100, song.date/100, song.time%100, song.time/100);
+}
 #else	// Old Version
 		xasprintf(&m.date, "%04d-01-01", song.year);
 #endif	
