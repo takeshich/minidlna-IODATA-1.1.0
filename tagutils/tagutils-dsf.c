@@ -32,16 +32,16 @@ _get_dsftags(char *file, struct song_metadata *psong)
 	
 	// Find the ID3 Tag Position of File
 	fseek(infile, 20  , SEEK_SET);
-	fread(buffer, 1, 4, infile );
+	fread(buffer, 1, 8, infile );
 
-	id3TagPoint = (buffer[0] & 0xff) | (buffer[1] & 0xff) << 8 | (buffer[2] & 0xff) << 16 | (buffer[3] & 0xff) << 24 ;
+	id3TagPoint = (buffer[0] & 0xffULL) | (buffer[1] & 0xffULL) << 8ULL | (buffer[2] & 0xffULL) << 16ULL | (buffer[3] & 0xffULL) << 24ULL| (buffer[4] & 0xffULL) << 32ULL | (buffer[5] & 0xffULL) << 40ULL |(buffer[6] & 0xffULL) << 48ULL | (buffer[7] & 0xffULL) << 56ULL ;
 
 	//DEBUG	DPRINTF(E_DEBUG,L_SCANNER,"id3TagPoint : %lld\n",id3TagPoint);
 	//DEBUG	DPRINTF(E_DEBUG,L_SCANNER,"id3TagPoint : 0x%08x\n",id3TagPoint);
 
 	// Jump to the Position of ID3 Tag & read
 	if (id3TagPoint > 0) {
-		fseek(infile, id3TagPoint  , SEEK_SET);
+		fseeko(infile, id3TagPoint  , SEEK_SET);
 		memset(buffer , 0, sizeof(buffer));
 		//Dump out to /tmp/id3.tag
     
