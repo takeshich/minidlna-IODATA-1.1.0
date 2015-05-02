@@ -319,11 +319,11 @@ static int _get_dsffileinfo(char *file, struct song_metadata *psong)
 
 	char *buffer = NULL;
 
-	long FileSize=0;
+	unsigned long long FileSize=0;
 //	int FileSize_H=0;
 //	int ChannelType = 0;
 	int ChannelNum = 0;
-	long SongSize = 0;
+	unsigned long long SongSize = 0;
 //	int SongSize_H = 0;
 	long length = 0 ;
 	long SampleFreq = 0;
@@ -340,7 +340,7 @@ static int _get_dsffileinfo(char *file, struct song_metadata *psong)
 	}
 	
 	fread(buffer, 1, 28, infile);
-	FileSize = (buffer[12]&0xff)|((buffer[13]&0xff)<< 8 )|((buffer[14]&0xff)<< 16)|((buffer[15]&0xff)<<24);
+	FileSize = (buffer[12]&0xffULL)|((buffer[13]&0xffULL)<< 8ULL )|((buffer[14]&0xffULL)<< 16ULL)|((buffer[15]&0xffULL)<<24ULL)|(buffer[16]&0xffULL)<<32ULL|((buffer[17]&0xffULL)<< 40ULL )|((buffer[18]&0xffULL)<< 48ULL)|((buffer[19]&0xffULL)<<56ULL);
 //	FileSize_H = (buffer[16]&0xff)|((buffer[17]&0xff)<< 8 )|((buffer[18]&0xff)<< 16)|((buffer[19]&0xff)<<24);
 
 	fseek(infile, 28, SEEK_SET);
@@ -354,7 +354,7 @@ static int _get_dsffileinfo(char *file, struct song_metadata *psong)
 	fseek(infile, 60, SEEK_SET);
 
 	fread(buffer, 1, 12, infile);
-	SongSize = (buffer[4]&0xff)|((buffer[5]&0xff)<< 8 )|((buffer[6]&0xff)<< 16)|((buffer[7]&0xff)<<24);
+	SongSize = (buffer[4]&0xffULL)|((buffer[5]&0xffULL)<< 8ULL )|((buffer[6]&0xffULL)<< 16ULL)|((buffer[7]&0xffULL)<< 24ULL)|(buffer[8]&0xffULL)<< 32ULL|((buffer[9]&0xffULL)<< 40ULL )|((buffer[10]&0xffULL)<< 48ULL)|((buffer[11]&0xffULL)<<56ULL);
 //	SongSize_H = (buffer[8]&0xff)|((buffer[9]&0xff)<< 8 )|((buffer[10]&0xff)<< 16)|((buffer[11]&0xff)<<24);
 
 	length = SongSize / SampleFreq;
